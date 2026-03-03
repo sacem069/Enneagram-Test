@@ -50,6 +50,7 @@ const QUESTIONS = [
 const TYPE_PROFILES = {
   1: {
     title: "The Reformer",
+    description: "Principled and driven by integrity, Type 1 seeks to improve themselves and the world around them. They are motivated by a desire to do what is right and uphold high standards. At their best, they bring clarity and ethical strength to any system.",
     coreFear: "Being wrong or corrupt",
     coreDesire: "To be good and correct",
     light: ["Ethical", "Responsible", "Principled", "Improves systems", "High standards"],
@@ -58,6 +59,7 @@ const TYPE_PROFILES = {
   },
   2: {
     title: "The Helper",
+    description: "Relational and generous, Type 2 is motivated by connection and the desire to be needed. They naturally tune into others' emotions and offer support. At their healthiest, they give freely without losing themselves.",
     coreFear: "Being unloved",
     coreDesire: "To be needed and appreciated",
     light: ["Caring", "Generous", "Emotionally intuitive", "Supportive"],
@@ -66,6 +68,7 @@ const TYPE_PROFILES = {
   },
   3: {
     title: "The Achiever",
+    description: "Goal-oriented and adaptable, Type 3 is driven by the need to feel valuable and accomplished. They excel at turning vision into results. At their best, they inspire others through authentic confidence rather than performance.",
     coreFear: "Being worthless",
     coreDesire: "To be valuable and successful",
     light: ["Motivated", "Efficient", "Inspiring", "Goal-oriented"],
@@ -74,6 +77,7 @@ const TYPE_PROFILES = {
   },
   4: {
     title: "The Individualist",
+    description: "Emotionally deep and identity-focused, Type 4 seeks meaning and authenticity. They are attuned to nuance and creative expression. At their healthiest, they embrace their uniqueness without feeling incomplete.",
     coreFear: "Having no identity",
     coreDesire: "To be unique and authentic",
     light: ["Creative", "Emotionally deep", "Self-aware", "Expressive"],
@@ -82,6 +86,7 @@ const TYPE_PROFILES = {
   },
   5: {
     title: "The Investigator",
+    description: "Analytical and self-sufficient, Type 5 is motivated by understanding and competence. They conserve energy and observe before engaging. At their best, they contribute insight while staying connected to the world around them.",
     coreFear: "Being incompetent or overwhelmed",
     coreDesire: "To be capable and self-sufficient",
     light: ["Analytical", "Observant", "Independent", "Innovative"],
@@ -90,6 +95,7 @@ const TYPE_PROFILES = {
   },
   6: {
     title: "The Loyalist",
+    description: "Responsible and security-oriented, Type 6 seeks stability and trustworthy support. They anticipate risks and value loyalty. At their healthiest, they cultivate inner confidence rather than relying solely on external reassurance.",
     coreFear: "Being unsupported or unsafe",
     coreDesire: "Security and stability",
     light: ["Loyal", "Responsible", "Prepared", "Committed"],
@@ -98,6 +104,7 @@ const TYPE_PROFILES = {
   },
   7: {
     title: "The Enthusiast",
+    description: "Optimistic and future-focused, Type 7 pursues freedom and possibility. They bring energy, ideas, and momentum to their environment. At their best, they stay present even when things feel uncomfortable.",
     coreFear: "Being trapped in pain",
     coreDesire: "To be free and happy",
     light: ["Optimistic", "Energetic", "Creative", "Visionary"],
@@ -106,6 +113,7 @@ const TYPE_PROFILES = {
   },
   8: {
     title: "The Challenger",
+    description: "Strong and direct, Type 8 values autonomy and protection. They are natural leaders who confront challenges head-on. At their healthiest, they combine strength with vulnerability.",
     coreFear: "Being controlled or vulnerable",
     coreDesire: "To be strong and autonomous",
     light: ["Protective", "Bold", "Direct", "Natural leader"],
@@ -114,6 +122,7 @@ const TYPE_PROFILES = {
   },
   9: {
     title: "The Peacemaker",
+    description: "Calm and accommodating, Type 9 seeks harmony and balance. They see multiple perspectives and create stability in groups. At their best, they assert their voice without sacrificing peace.",
     coreFear: "Conflict or disconnection",
     coreDesire: "Harmony and peace",
     light: ["Calm", "Mediating", "Accepting", "Grounded"],
@@ -293,6 +302,7 @@ function renderProfile(typeNum) {
   return `
     <section class="results-profile">
       <h3 class="profile-title">Type ${typeNum} — ${p.title}</h3>
+      <p class="profile-description">${p.description}</p>
       <div class="profile-core">
         <p><strong>Core fear:</strong> ${p.coreFear}</p>
         <p><strong>Core desire:</strong> ${p.coreDesire}</p>
