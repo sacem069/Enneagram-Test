@@ -296,7 +296,10 @@ function renderResults(scores) {
 
   resultsContainer.innerHTML = `
     <p class="results-type-label">Your type</p>
-    <p class="results-type-number">${primaryType}</p>
+    <div class="results-type-wrapper">
+      <div class="results-type-aura" aria-hidden="true"></div>
+      <p class="results-type-number">${primaryType}</p>
+    </div>
     <div class="results-bars">
       <h3 class="results-bars-title">Full breakdown</h3>
       ${sortedWithPct
@@ -336,5 +339,12 @@ function restartTest() {
 backBtn.addEventListener('click', goBack);
 nextBtn.addEventListener('click', goNext);
 
-// Init
-showSection(0);
+const landing = document.getElementById('landing');
+const testContent = document.getElementById('test-content');
+document.getElementById('start-btn').addEventListener('click', () => {
+  landing.hidden = true;
+  testContent.hidden = false;
+  showSection(0);
+});
+
+// Init: show landing first (test content starts hidden)
