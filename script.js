@@ -296,6 +296,7 @@ function renderResults(scores) {
 
   resultsContainer.innerHTML = `
     <p class="results-type-label">Your type</p>
+    <p class="results-type-note">Based on your answers, your strongest match is Type ${primaryType}. This is a reflection tool, not a label — you may relate to multiple types.</p>
     <div class="results-type-wrapper">
       <div class="results-type-aura" aria-hidden="true"></div>
       <p class="results-type-number">${primaryType}</p>

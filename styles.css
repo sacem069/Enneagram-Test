@@ -34,7 +34,7 @@
 }
 
 .landing-text {
-  margin: 0 0 0.5rem;
+  margin: 0 0 0.25rem;
   font-family: "Catchy Mager", serif;
   font-size: 1.75rem;
   font-weight: 600;
@@ -43,7 +43,7 @@
 }
 
 .landing-subtitle {
-  margin: 0 0 1.5rem;
+  margin: 0 0 2.5rem;
   font-family: "helvetica-neue-lt-pro", sans-serif;
   font-size: 1rem;
   font-weight: 400;
@@ -74,6 +74,7 @@
 
   .landing-subtitle {
     font-size: 1.1rem;
+    margin-bottom: 3rem;
   }
 
   .btn-start {
@@ -389,12 +390,22 @@ body {
 }
 
 .results-type-label {
-  margin: 0 0 0.5rem;
+  margin: 2.5rem 0 0.5rem;
   font-size: 0.9rem;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: #666;
   text-align: center;
+}
+
+.results-type-note {
+  margin: 0 auto 1rem;
+  max-width: 320px;
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: #999;
+  text-align: center;
+  line-height: 1.5;
 }
 
 .results-type-wrapper {
