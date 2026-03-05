@@ -11,6 +11,11 @@ body {
   justify-content: center;
   align-items: flex-start;
   -webkit-text-size-adjust: 100%;
+  background-image: url("back.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
 }
 
 .container {
@@ -132,15 +137,16 @@ body {
 
 .radio-group {
   display: flex;
-  gap: 0.35rem;
+  gap: 0.75rem;
   margin: 0;
   padding: 0;
   border: none;
+  justify-content: space-between;
 }
 
 @media (min-width: 640px) {
   .radio-group {
-    gap: 0.5rem;
+    gap: 1rem;
   }
 }
 
@@ -151,69 +157,101 @@ body {
   align-items: center;
   flex: 1;
   padding: 0.5rem 0.25rem;
-  font-size: 0.75rem;
   cursor: pointer;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  background: #fafafa;
   text-align: center;
   min-width: 0;
   min-height: 44px;
+  gap: 0.5rem;
+  -webkit-appearance: none;
+  appearance: none;
+  background: none;
+  border: none;
+  margin: 0;
+  font: inherit;
 }
 
-@media (min-width: 640px) {
-  .radio-option {
-    padding: 0.6rem 0.4rem;
-    font-size: 0.8rem;
-  }
-}
-
-.radio-option:hover {
-  background: #f0f0f0;
-}
-
-.radio-option input {
-  position: absolute;
-  opacity: 0;
-  pointer-events: none;
-}
-
-.radio-option:has(input:checked) {
-  border-color: #333;
-  background: #fff;
-}
-
-.radio-value {
+.radio-circle {
   display: block;
-  font-weight: 600;
-  font-size: 0.95rem;
-  margin-bottom: 0.15rem;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  flex-shrink: 0;
+  filter: brightness(0.7);
+  transition: transform 0.25s ease, filter 0.25s ease, box-shadow 0.25s ease;
 }
 
-@media (min-width: 640px) {
-  .radio-value {
-    font-size: 1rem;
-    margin-bottom: 0.25rem;
-  }
+/* Strongly Disagree — red gradient */
+.radio-option[data-option="1"] .radio-circle {
+  background: radial-gradient(circle, #851717 0%, #b91c1c 35%, rgba(222, 12, 12, 0.67) 70%, rgba(158, 13, 13, 0.593) 100%);
+  /* box-shadow: 0 0 14px rgba(185, 28, 28, 0.5); */
+}
+
+/* Disagree — orange gradient */
+.radio-option[data-option="2"] .radio-circle {
+  background: radial-gradient(circle, #9a3412 0%, #ea580c 35%, rgba(234, 90, 12, 0.712) 70%, rgba(234, 90, 12, 0.758) 100%);
+  /* box-shadow: 0 0 14px rgba(234, 88, 12, 0.5); */
+}
+
+/* Neutral — gray gradient */
+.radio-option[data-option="3"] .radio-circle {
+  background: radial-gradient(circle, #9f9f9f 0%, #949699 35%, rgba(177, 177, 179, 0.4) 70%, rgba(112, 113, 114, 0) 100%);
+  /* box-shadow: 0 0 14px rgba(107, 114, 128, 0.5); */
+}
+
+/* Agree — light blue / teal gradient */
+.radio-option[data-option="4"] .radio-circle {
+  background: radial-gradient(circle, #0d4f4f 0%, #0d9488 35%, rgba(13, 148, 136, 0.4) 70%, rgba(13, 148, 137, 0.66) 100%);
+  /* box-shadow: 0 0 14px rgba(13, 148, 136, 0.5); */
+}
+
+/* Strongly Agree — green gradient */
+.radio-option[data-option="5"] .radio-circle {
+  background: radial-gradient(circle, #14532d 0%, #22c55e 35%, rgba(34, 197, 94, 0.4) 70%, rgba(34, 197, 94, 0.653) 100%);
+  /* box-shadow: 0 0 14px rgba(34, 197, 94, 0.5); */
+}
+
+.radio-option:hover:not(.is-selected) .radio-circle {
+  filter: brightness(0.85);
+}
+
+.radio-option.is-selected .radio-circle {
+  transform: scale(1.1);
+  filter: brightness(1.35);
+}
+
+.radio-option.is-selected:hover .radio-circle {
+  filter: brightness(1.5);
+}
+
+.radio-option[data-option="1"].is-selected .radio-circle { box-shadow: 0 0 14px rgba(185, 28, 28, 0.5), 0 0 22px rgba(185, 28, 28, 0.4); }
+.radio-option[data-option="2"].is-selected .radio-circle { box-shadow: 0 0 14px rgba(234, 88, 12, 0.5), 0 0 22px rgba(234, 88, 12, 0.4); }
+.radio-option[data-option="3"].is-selected .radio-circle { box-shadow: 0 0 14px rgba(96, 100, 108, 0.5), 0 0 22px rgba(90, 94, 101, 0.4); }
+.radio-option[data-option="4"].is-selected .radio-circle { box-shadow: 0 0 14px rgba(13, 148, 136, 0.5), 0 0 22px rgba(13, 148, 136, 0.4); }
+.radio-option[data-option="5"].is-selected .radio-circle { box-shadow: 0 0 14px rgba(34, 197, 94, 0.5), 0 0 22px rgba(34, 197, 94, 0.4); }
+
+.radio-option:focus-visible .radio-circle {
+  outline: 2px solid rgba(0, 0, 0, 0.4);
+  outline-offset: 2px;
 }
 
 .radio-text {
   display: block;
-  line-height: 1.15;
-  color: #555;
+  line-height: 1.2;
+  color: #444;
   font-size: 0.6rem;
   word-break: break-word;
 }
 
 @media (min-width: 480px) {
   .radio-text {
-    font-size: 0.68rem;
+    font-size: 0.65rem;
   }
 }
 
 @media (min-width: 640px) {
   .radio-text {
-    font-size: 0.75rem;
+    font-size: 0.72rem;
   }
 }
 
@@ -261,133 +299,27 @@ body {
   display: none !important;
 }
 
-.results-title {
+.results-type-label {
   margin: 0 0 0.5rem;
-  font-size: 1.15rem;
-}
-
-@media (min-width: 640px) {
-  .results-title {
-    margin: 0 0 0.75rem;
-    font-size: 1.25rem;
-  }
-}
-
-.results-top {
-  margin: 0 0 1.25rem;
-  font-size: 0.95rem;
-  line-height: 1.5;
-}
-
-@media (min-width: 640px) {
-  .results-top {
-    margin: 0 0 1.5rem;
-    font-size: 1rem;
-  }
-}
-
-.results-profile {
-  padding: 1rem 0;
-  margin-bottom: 1.25rem;
-  border-top: 1px solid #e5e5e5;
-  border-bottom: 1px solid #e5e5e5;
-}
-
-@media (min-width: 640px) {
-  .results-profile {
-    padding: 1.25rem 0;
-    margin-bottom: 1.5rem;
-  }
-}
-
-.profile-title {
-  margin: 0 0 0.5rem;
-  font-size: 1.05rem;
-  font-weight: 600;
-  line-height: 1.3;
-}
-
-@media (min-width: 640px) {
-  .profile-title {
-    font-size: 1.1rem;
-  }
-}
-
-.profile-description {
-  margin: 0 0 0.75rem;
-  font-size: 0.875rem;
-  line-height: 1.5;
-  color: #555;
-}
-
-@media (min-width: 640px) {
-  .profile-description {
-    margin: 0 0 1rem;
-    font-size: 0.9rem;
-  }
-}
-
-.profile-core {
-  margin-bottom: 1rem;
-}
-
-.profile-core p {
-  margin: 0 0 0.35rem;
   font-size: 0.9rem;
-  line-height: 1.5;
-}
-
-.profile-aspects {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 0.75rem;
-  margin-bottom: 1rem;
-}
-
-@media (min-width: 480px) {
-  .profile-aspects {
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-  }
-}
-
-.profile-aspect-title {
-  margin: 0 0 0.4rem;
-  font-size: 0.8rem;
-  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.1em;
+  color: #666;
+  text-align: center;
 }
 
-.profile-light .profile-aspect-title {
-  color: #5a6c4a;
-}
-
-.profile-shadow .profile-aspect-title {
-  color: #6b5b6b;
-}
-
-.profile-light ul,
-.profile-shadow ul {
-  margin: 0;
-  padding-left: 1.1rem;
-  font-size: 0.875rem;
-  line-height: 1.5;
-}
-
-.profile-integration {
-  margin: 0;
-  padding: 0.6rem 0.75rem;
-  font-size: 0.85rem;
-  line-height: 1.5;
-  background: #f8f8f8;
-  border-radius: 4px;
+.results-type-number {
+  margin: 0 0 2rem;
+  font-size: 6rem;
+  font-weight: 600;
+  line-height: 1;
+  text-align: center;
 }
 
 @media (min-width: 640px) {
-  .profile-integration {
-    padding: 0.75rem;
-    font-size: 0.9rem;
+  .results-type-number {
+    font-size: 8rem;
+    margin-bottom: 2.5rem;
   }
 }
 

@@ -159,46 +159,56 @@ const LIKERT_LABELS = [
   "Strongly Agree"
 ];
 
-// Render questions for current section
+// Render questions for current section (custom controls - no native radios to avoid grouping bugs)
 function renderQuestions() {
   const questions = getQuestionsBySection(currentSection);
   questionContainer.innerHTML = questions
-    .map(
-      (q) => `
+    .map((q) => {
+      const selectedValue = answers[q.id];
+      return `
     <div class="question-block" data-question-id="${q.id}">
       <p class="question-text">${q.text}</p>
-      <fieldset class="radio-group" role="group" aria-label="Rate your agreement">
+      <div class="radio-group" role="radiogroup" aria-label="Rate your agreement">
         ${[1, 2, 3, 4, 5]
           .map(
             (v) => {
               const label = LIKERT_LABELS[v - 1];
+              const isSelected = selectedValue === v;
               return `
-          <label class="radio-option">
-            <input type="radio" name="${q.id}" value="${v}" aria-label="${label}" ${answers[q.id] === v ? 'checked' : ''}>
-            <span class="radio-value">${v}</span>
+          <button type="button" class="radio-option ${isSelected ? "is-selected" : ""}" data-question-id="${q.id}" data-value="${v}" role="radio" aria-label="${label}" aria-checked="${isSelected}" data-option="${v}">
+            <span class="radio-circle" aria-hidden="true"></span>
             <span class="radio-text">${label}</span>
-          </label>
+          </button>
         `;
             }
           )
-          .join('')}
-      </fieldset>
+          .join("")}
+      </div>
     </div>
-  `
-    )
-    .join('');
+  `;
+    })
+    .join("");
 
-  // Attach change listeners
-  questionContainer.querySelectorAll('input[type="radio"]').forEach((radio) => {
-    radio.addEventListener('change', handleAnswerChange);
+  // Attach click listeners
+  questionContainer.querySelectorAll(".radio-option").forEach((btn) => {
+    btn.addEventListener("click", handleOptionClick);
   });
 }
 
-function handleAnswerChange(e) {
-  const name = e.target.name;
-  const value = parseInt(e.target.value, 10);
-  answers[name] = value;
+function handleOptionClick(e) {
+  const btn = e.currentTarget;
+  const questionId = parseInt(btn.dataset.questionId, 10);
+  const value = parseInt(btn.dataset.value, 10);
+  answers[questionId] = value;
   updateNextButton();
+
+  // Update selected state for this question only
+  const block = btn.closest(".question-block");
+  block.querySelectorAll(".radio-option").forEach((b) => {
+    const isSelected = parseInt(b.dataset.value, 10) === value;
+    b.setAttribute("aria-checked", isSelected);
+    b.classList.toggle("is-selected", isSelected);
+  });
 }
 
 function updateNextButton() {
@@ -273,55 +283,6 @@ function scoreToPercent(score) {
   return Math.round((score / MAX_SCORE_PER_TYPE) * 100);
 }
 
-function getTopThreeGroups(sortedWithPct) {
-  const groups = [];
-  let lastPct = null;
-  for (const item of sortedWithPct) {
-    if (groups.length >= 3 && item.pct !== lastPct) break;
-    if (item.pct !== lastPct) {
-      groups.push({ pct: item.pct, types: [] });
-      lastPct = item.pct;
-    }
-    groups[groups.length - 1].types.push(item.type);
-  }
-  return groups;
-}
-
-function formatTopTypes(groups) {
-  return groups
-    .map((g) => {
-      const typesStr = g.types.length > 1 ? `Types ${g.types.join(' & ')}` : `Type ${g.types[0]}`;
-      return `${typesStr} (${g.pct}%)`;
-    })
-    .join(' · ');
-}
-
-function renderProfile(typeNum) {
-  const p = TYPE_PROFILES[typeNum];
-  if (!p) return "";
-  return `
-    <section class="results-profile">
-      <h3 class="profile-title">Type ${typeNum} — ${p.title}</h3>
-      <p class="profile-description">${p.description}</p>
-      <div class="profile-core">
-        <p><strong>Core fear:</strong> ${p.coreFear}</p>
-        <p><strong>Core desire:</strong> ${p.coreDesire}</p>
-      </div>
-      <div class="profile-aspects">
-        <div class="profile-light">
-          <h4 class="profile-aspect-title">Light</h4>
-          <ul>${p.light.map((item) => `<li>${item}</li>`).join("")}</ul>
-        </div>
-        <div class="profile-shadow">
-          <h4 class="profile-aspect-title">Shadow</h4>
-          <ul>${p.shadow.map((item) => `<li>${item}</li>`).join("")}</ul>
-        </div>
-      </div>
-      <p class="profile-integration"><strong>When integrated:</strong> ${p.integration}</p>
-    </section>
-  `;
-}
-
 function renderResults(scores) {
   const sortedWithPct = Object.entries(scores)
     .map(([type, score]) => ({
@@ -332,13 +293,10 @@ function renderResults(scores) {
     .sort((a, b) => b.score - a.score);
 
   const primaryType = sortedWithPct[0].type;
-  const topGroups = getTopThreeGroups(sortedWithPct);
-  const topText = formatTopTypes(topGroups);
 
   resultsContainer.innerHTML = `
-    <h2 class="results-title">Your Results</h2>
-    <p class="results-top">${topText}</p>
-    ${renderProfile(primaryType)}
+    <p class="results-type-label">Your type</p>
+    <p class="results-type-number">${primaryType}</p>
     <div class="results-bars">
       <h3 class="results-bars-title">Full breakdown</h3>
       ${sortedWithPct
@@ -353,13 +311,13 @@ function renderResults(scores) {
         </div>
       `
         )
-        .join('')}
+        .join("")}
     </div>
     <p class="results-disclaimer">For reflection only; not a diagnosis.</p>
     <button type="button" class="btn btn-restart" id="restart-btn">Restart</button>
   `;
 
-  document.getElementById('restart-btn').addEventListener('click', restartTest);
+  document.getElementById("restart-btn").addEventListener("click", restartTest);
 }
 
 function restartTest() {
