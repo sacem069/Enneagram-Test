@@ -34,12 +34,20 @@
 }
 
 .landing-text {
-  margin: 0 0 1.5rem;
+  margin: 0 0 0.5rem;
   font-family: "Catchy Mager", serif;
   font-size: 1.75rem;
   font-weight: 600;
   line-height: 1.3;
   color: #111;
+}
+
+.landing-subtitle {
+  margin: 0 0 1.5rem;
+  font-family: "helvetica-neue-lt-pro", sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  color: #333;
 }
 
 .btn-start {
@@ -62,6 +70,10 @@
 @media (min-width: 640px) {
   .landing-text {
     font-size: 2.25rem;
+  }
+
+  .landing-subtitle {
+    font-size: 1.1rem;
   }
 
   .btn-start {
@@ -134,11 +146,13 @@ body {
 }
 
 .progress-section {
+  margin-top: 2rem;
   margin-bottom: 1.5rem;
 }
 
 @media (min-width: 640px) {
   .progress-section {
+    margin-top: 2.5rem;
     margin-bottom: 2rem;
   }
 }
@@ -226,6 +240,7 @@ body {
   flex: 1;
   padding: 0.5rem 0.25rem;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
   text-align: center;
   min-width: 0;
   min-height: 44px;
@@ -245,8 +260,11 @@ body {
   border-radius: 50%;
   border: none;
   flex-shrink: 0;
-  filter: brightness(0.7);
   transition: transform 0.25s ease, filter 0.25s ease, box-shadow 0.25s ease;
+}
+
+.radio-option:not(.is-selected) .radio-circle {
+  filter: brightness(0.7);
 }
 
 /* Strongly Disagree — red gradient */
@@ -279,17 +297,9 @@ body {
   /* box-shadow: 0 0 14px rgba(34, 197, 94, 0.5); */
 }
 
-.radio-option:hover:not(.is-selected) .radio-circle {
-  filter: brightness(0.85);
-}
-
 .radio-option.is-selected .radio-circle {
   transform: scale(1.1);
   filter: brightness(1.35);
-}
-
-.radio-option.is-selected:hover .radio-circle {
-  filter: brightness(1.5);
 }
 
 .radio-option[data-option="1"].is-selected .radio-circle { box-shadow: 0 0 14px rgba(185, 28, 28, 0.5), 0 0 22px rgba(185, 28, 28, 0.4); }
@@ -298,7 +308,17 @@ body {
 .radio-option[data-option="4"].is-selected .radio-circle { box-shadow: 0 0 14px rgba(13, 148, 136, 0.5), 0 0 22px rgba(13, 148, 136, 0.4); }
 .radio-option[data-option="5"].is-selected .radio-circle { box-shadow: 0 0 14px rgba(34, 197, 94, 0.5), 0 0 22px rgba(34, 197, 94, 0.4); }
 
-.radio-option:focus-visible .radio-circle {
+@media (hover: hover) {
+  .radio-option:hover:not(.is-selected) .radio-circle {
+    filter: brightness(0.85);
+  }
+  .radio-option.is-selected:hover .radio-circle {
+    filter: brightness(1.5);
+  }
+}
+
+.radio-option:focus-visible .radio-circle,
+.radio-option:focus-visible.is-selected .radio-circle {
   outline: 2px solid rgba(0, 0, 0, 0.4);
   outline-offset: 2px;
 }
